@@ -1,0 +1,25 @@
+# compiled output
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# uploads
+uploads/
+
+# logs
+*.log
+logs/
+
+# env
+.env
+*.local
+
+# build
+dist/
+bin/
