@@ -2,10 +2,10 @@
 
 | 属性 | 内容 |
 |---|---|
-| **文档版本** | V2.0 |
+| **文档版本** | V2.1 |
 | **文档状态** | 正式版 |
 | **所属项目** | 哩哔哩哔（LiBiliBi） |
-| **技术定位** | React 18 + TypeScript + Tailwind CSS + DaisyUI + Zustand，monorepo 架构 |
+| **技术定位** | React 19 + TypeScript + Tailwind CSS + DaisyUI + Zustand，monorepo 架构 |
 | **开发周期** | 2026-04-02 ~ 2026-04-13 |
 
 ---
@@ -79,7 +79,7 @@ frontend/                          # pnpm workspace 根目录
 | 类别 | 技术选型 | 说明 |
 |---|---|---|
 | **包管理器** | pnpm + workspace | Monorepo 管理，shared 作为本地依赖 |
-| **核心框架** | React 18 + TypeScript | 函数组件 + Hooks + 类型安全 |
+| **核心框架** | React 19 + TypeScript | 函数组件 + Hooks + 类型安全 |
 | **构建工具** | Vite | 极速开发服务器，热更新 |
 | **CSS 框架** | Tailwind CSS | Utility-First 原子化样式 |
 | **UI 组件库** | DaisyUI | 基于 Tailwind 的组件库 |
@@ -658,18 +658,20 @@ export async function getSearchSuggestions(keyword: string): Promise<string[]> {
 
 | 阶段 | 时间 | 前端任务 |
 |---|---|---|
-| **阶段一** | 4.2 | Monorepo 初始化（pnpm workspace），shared 包基础结构，admin 项目初始化 |
-| **阶段二** | 4.3 | shared/api 封装（client + 各模块），shared/types 定义，shared/store |
+| **阶段一** | 4.2 | Monorepo 初始化（pnpm workspace），shared 包基础结构，user/admin 项目初始化 |
+| **阶段二** | 4.3 | shared/types 定义，shared/utils，shared/store，shared/hooks |
 | **阶段三** | 4.4 | shared/components 基础组件（VideoCard, HeaderNav, StatusBadge, UserAvatar）|
 | **阶段四** | 4.5 | user 用户端页面（HomePage, LoginPage, RegisterPage），路由守卫 |
 | **阶段五** | 4.6 | user 视频详情页（VideoDetailPage + 三连 + 评论），PublishPage |
 | **阶段六** | 4.7 | user 搜索页 + AI 搜索建议，历史/收藏/我的视频页 |
 | **阶段七** | 4.8 | admin 管理端全部页面（Login + Dashboard + AuditList + UserManage + ReportHandle）|
-| **阶段八** | 4.9~4.10 | 完善楼中楼评论、收藏页、响应式适配，细节打磨 |
-| **阶段九** | 4.10~4.11 | 全链路联调，401/403/409 等异常场景处理 |
+| **阶段八** | 后端完成后 | shared/api 接口层开发，前后端接口对接 |
+| **阶段九** | 4.9~4.10 | 全链路联调，401/403/409 等异常场景处理 |
+| **阶段十** | 4.12 | 代码规范扫描，README 完善，最终自测 |
+| **阶段十一** | 4.13 | 最终提交（截止 18:00） |
 | **阶段十** | 4.12 | 代码规范扫描，README 完善，最终自测 |
 | **阶段十一** | 4.13 | 最终提交（截止 18:00） |
 
 ---
 
-*本文档为《哩哔哩哔》前端产品需求文档 V2.0，基于 monorepo 架构（shared + user + admin），涵盖分层设计、AI能力融合、组件规范及开发里程碑。*
+*本文档为《哩哔哩哔》前端产品需求文档 V2.1，基于 monorepo 架构（shared + user + admin），涵盖分层设计、AI能力融合、组件规范及开发里程碑。*

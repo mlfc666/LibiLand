@@ -1,7 +1,7 @@
 # 《哩哔哩哔》前端任务清单
 
 > 开发周期：2026-04-02 ~ 2026-04-13
-> 技术栈：React 18 + TypeScript + Tailwind CSS + DaisyUI + Zustand + React Router v6 + pnpm workspace
+> 技术栈：React 19 + TypeScript + Tailwind CSS + DaisyUI + Zustand + React Router v6 + pnpm workspace
 > 每完成一项，在 `[ ]` 中填入 `[x]`
 > 标注 `【PRD-章节】` 的条目表示对应前端 PRD 章节，便于溯源
 
@@ -11,60 +11,44 @@
 
 ### 1.1 Monorepo 基础搭建
 
-- [ ] 确认 `frontend/pnpm-workspace.yaml` 内容正确：
-  ```yaml
-  packages:
-    - 'shared'
-    - 'user'
-    - 'admin'
-  ```
-- [ ] 确认三个目录均已存在且结构正确
+- [x] `frontend/pnpm-workspace.yaml` 已配置 shared、user、admin 三个包
+- [x] 三个目录均已存在且结构正确
 
 ### 1.2 shared 包初始化 【PRD-2】
 
-- [ ] 创建 `shared/src/` 目录结构：
+- [x] `shared/src/` 目录结构已创建：
   ```
   shared/src/
   ├── api/
   ├── components/
-  │   ├── base/          # 原子组件
-  │   ├── business/      # 业务组件
-  │   └── domain/        # 领域组件
+  │   ├── base/
+  │   ├── business/
+  │   └── domain/
   ├── hooks/
   ├── store/
   ├── styles/
   ├── types/
   └── utils/
   ```
-- [ ] 编写 `shared/package.json`：
-  ```json
-  {
-    "name": "@libiland/shared",
-    "version": "1.0.0",
-    "type": "module",
-    "main": "./src/index.js",
-    "exports": {
-      ".": "./src/index.js",
-      "./api": "./src/api/index.js",
-      "./components": "./src/components/index.js",
-      "./hooks": "./src/hooks/index.js",
-      "./store": "./src/store/index.js",
-      "./types": "./src/types/index.js",
-      "./utils": "./src/utils/index.js"
-    }
-  }
-  ```
-- [ ] 创建 `shared/src/index.js` 统一导出入口
+- [x] `shared/package.json` 已配置 `@libiland/shared`，type 为 module
+- [x] `shared/tsconfig.json` 已创建
 
 ### 1.3 user 和 admin 项目配置 【PRD-1.1】
 
-- [ ] 确认 `user/package.json` 中依赖配置正确（包含 `@libiland/shared` workspace 依赖）
-- [ ] 确认 `admin/package.json` 中依赖配置正确（包含 `@libiland/shared` workspace 依赖）
-- [ ] 安装依赖：`pnpm install`（在 `frontend/` 根目录执行）
-- [ ] 配置 `user/vite.config.ts`：路径别名 `@/` 指向 `src/`，代理 `/api` 到后端
-- [ ] 配置 `admin/vite.config.ts`：路径别名 `@/` 指向 `src/`，代理 `/api` 到后端
+- [x] `user/package.json` 已配置 `@libiland/shared` workspace 依赖
+- [x] `admin/package.json` 已配置 `@libiland/shared` workspace 依赖
+- [x] `user/vite.config.ts`：端口 14001，路径别名 `@/` 指向 `src/`，代理 `/api` 到后端
+- [x] `admin/vite.config.ts`：端口 14002，路径别名 `@/` 指向 `src/`，代理 `/api` 到后端
+- [x] `user/tsconfig.app.json` 已配置 `@/` 路径别名
+- [x] `admin/tsconfig.app.json` 已配置 `@/` 路径别名
 
-### 1.4 环境变量配置
+### 1.4 Tailwind + DaisyUI 配置
+
+- [x] user 和 admin 均已安装 tailwindcss、postcss、autoprefixer、daisyui
+- [x] user 和 admin 的 `tailwind.config.js` 均已配置 DaisyUI 插件
+- [x] `tailwind.config.js` 的 `content` 已配置 `['./index.html', './src/**/*.{ts,tsx}']`
+
+### 1.5 环境变量配置
 
 - [ ] 创建 `user/.env.development`：
   ```
@@ -94,109 +78,33 @@
 - [ ] 编写 `UserInfo` 接口：`id`, `username`, `avatar`, `role`, `status`, `coins`, `experience`, `gender`, `birthday`, `bio`, `createdAt`
 - [ ] 编写 `LoginForm` / `RegisterForm` 类型
 - [ ] 编写 `UpdateProfileForm` 类型
-- [ ] 导出到 `shared/src/types/index.js`
+- [ ] 导出到 `shared/src/types/index.ts`
 
 ### 2.2 视频类型（`types/video.ts`）
 
 - [ ] 编写 `Video` 接口：`id`, `title`, `description`, `coverUrl`, `filePath`, `duration`, `authorId`, `authorName`, `authorAvatar`, `category`, `tags`, `aiTags`, `aiSummary`, `status`, `rejectReason`, `clicks`, `likes`, `coins`, `collects`, `comments`, `score`, `downloads`, `publishedAt`, `createdAt`
 - [ ] 编写 `VideoListQuery` / `VideoPublishForm` 类型
-- [ ] 导出到 `shared/src/types/index.js`
+- [ ] 导出到 `shared/src/types/index.ts`
 
 ### 2.3 评论类型（`types/comment.ts`）
 
 - [ ] 编写 `Comment` 接口：`id`, `videoId`, `userId`, `username`, `userAvatar`, `parentId`, `rootId`, `content`, `likeCount`, `replyCount`, `sentimentScore`, `sentimentLabel`, `status`, `createdAt`, `replies?: Comment[]`
 - [ ] 编写 `SentimentLabel` 类型别名：`'POSITIVE' | 'NORMAL' | 'NEGATIVE'`
 - [ ] 编写 `PublishCommentForm` 类型
-- [ ] 导出到 `shared/src/types/index.js`
+- [ ] 导出到 `shared/src/types/index.ts`
 
 ### 2.4 API 统一类型（`types/api.ts`）
 
 - [ ] 编写 `ApiResult<T>` 接口：`code`, `msg`, `data`
 - [ ] 编写 `PageResult<T>` 接口：`list`, `total`, `page`, `size`
 - [ ] 编写 `ActionStatus` 接口：`liked`, `collected`, `coined`
-- [ ] 导出到 `shared/src/types/index.js`
+- [ ] 导出到 `shared/src/types/index.ts`
 
 ---
 
-## 三、API 请求层（shared/src/api/）【PRD-2.1】
+## 三、工具函数（shared/src/utils/）【PRD-2.4】
 
-### 3.1 client.ts（Axios 实例）
-
-- [ ] 创建 Axios 实例，`baseURL` 读取 `VITE_API_BASE_URL`，`timeout: 10000`
-- [ ] 请求拦截器：自动从 `sessionStorage` 读取 `SESSION_ID`，附加到 `X-Session-Id` header
-- [ ] 响应拦截器：统一解包 `ApiResult<T>`，`code !== 200` 时 reject
-- [ ] `code === 401`：清除 `SESSION_ID`，跳转 `/user/login`
-- [ ] 错误处理：处理网络超时、500 等全局错误，返回标准化错误对象 `{ code, msg, status }`
-- [ ] 导出默认实例 `client`
-
-### 3.2 用户接口（`api/user.ts`）
-
-- [ ] `userRegister(form: RegisterForm): Promise<ApiResult>` — POST `/user/register`
-- [ ] `userLogin(form: LoginForm): Promise<ApiResult<UserInfo>>` — POST `/user/login`
-- [ ] `userLogout(): Promise<ApiResult>` — POST `/user/logout`
-- [ ] `getProfile(): Promise<ApiResult<UserInfo>>` — GET `/user/profile`
-- [ ] `updateProfile(form: UpdateProfileForm): Promise<ApiResult>` — PUT `/user/profile`
-- [ ] `changePassword(oldPassword, newPassword): Promise<ApiResult>` — PUT `/user/password`
-- [ ] `deleteAccount(password): Promise<ApiResult>` — DELETE `/user/account`
-
-### 3.3 视频接口（`api/video.ts`）
-
-- [ ] `getVideoList(params: { page?, size?, refresh? }): Promise<ApiResult<PageResult<Video>>>` — GET `/video/list`
-- [ ] `getVideoDetail(id: number): Promise<ApiResult<Video>>` — GET `/video/detail?id={id}`
-- [ ] `searchVideos(params: { keyword, page?, size? }): Promise<ApiResult<PageResult<Video>>>` — GET `/video/search`
-- [ ] `publishVideo(formData: FormData): Promise<ApiResult>` — POST `/video/publish`（multipart）
-- [ ] `getMyVideos(params: { page?, size? }): Promise<ApiResult<PageResult<Video>>>` — GET `/video/my`
-- [ ] `deleteVideo(id: number): Promise<ApiResult>` — DELETE `/video/{id}`
-
-### 3.4 互动接口（`api/action.ts`）
-
-- [ ] `toggleLike(videoId: number): Promise<ApiResult<ActionStatus>>` — POST `/action/like`
-- [ ] `toggleCollect(videoId: number): Promise<ApiResult<ActionStatus>>` — POST `/action/collect`
-- [ ] `throwCoin(videoId: number): Promise<ApiResult>` — POST `/action/coin`
-- [ ] `getActionStatus(videoId: number): Promise<ApiResult<ActionStatus>>` — GET `/action/status`
-
-### 3.5 评论接口（`api/comment.ts`）
-
-- [ ] `getCommentList(videoId: number): Promise<ApiResult<Comment[]>>` — GET `/comment/list`
-- [ ] `publishComment(form: PublishCommentForm): Promise<ApiResult<Comment>>` — POST `/comment/publish`
-- [ ] `deleteComment(id: number): Promise<ApiResult>` — DELETE `/comment/{id}`
-- [ ] `likeComment(id: number): Promise<ApiResult>` — POST `/comment/like`
-
-### 3.6 历史/收藏/签到接口（`api/history.ts`, `api/collect.ts`, `api/signin.ts`）
-
-- [ ] `getHistory(params: { page?, size? }): Promise<ApiResult<PageResult<HistoryItem>>>` — GET `/history/list`
-- [ ] `recordHistory(videoId: number): Promise<ApiResult>` — POST `/history/record`
-- [ ] `getCollectList(params: { page?, size? }): Promise<ApiResult<PageResult<Video>>>` — GET `/collect/list`
-- [ ] `getSigninStatus(): Promise<ApiResult<{ signed: boolean }>>` — GET `/signin/today`
-- [ ] `doSignin(): Promise<ApiResult<{ coinsEarned: number }>>` — POST `/signin/do`
-
-### 3.7 管理端接口（`api/admin.ts`）
-
-- [ ] `adminLogin(form: LoginForm): Promise<ApiResult<UserInfo>>` — POST `/admin/login`
-- [ ] `getPendingVideos(params: { page?, size? }): Promise<ApiResult<PageResult<Video>>>` — GET `/admin/video/pendingList`
-- [ ] `approveVideo(videoId: number): Promise<ApiResult>` — POST `/admin/video/approve`
-- [ ] `rejectVideo(videoId: number, reason: string): Promise<ApiResult>` — POST `/admin/video/reject`
-- [ ] `getUserList(params: { page?, size?, keyword?, status? }): Promise<ApiResult<PageResult<UserInfo>>>` — GET `/admin/user/list`
-- [ ] `banUser(userId: number): Promise<ApiResult>` — POST `/admin/user/ban`
-- [ ] `unbanUser(userId: number): Promise<ApiResult>` — POST `/admin/user/unban`
-- [ ] `getReportList(params: { page?, size? }): Promise<ApiResult<PageResult<Report>>>` — GET `/admin/report/list`
-- [ ] `ignoreReport(reportId: number, note: string): Promise<ApiResult>` — POST `/admin/report/ignore`
-- [ ] `takedownReport(reportId: number, note: string): Promise<ApiResult>` — POST `/admin/report/takedown`
-
-### 3.8 AI 接口（`api/ai.ts`）
-
-- [ ] `getSearchSuggestions(keyword: string): Promise<string[]>` — 前端直调 DeepSeek API，返回5个推荐热词
-
-### 3.9 API 统一导出
-
-- [ ] 创建 `shared/src/api/index.js`，导出所有接口模块
-- [ ] 确认 user 和 admin 均可通过 `import { userLogin } from '@libiland/shared/api'` 正确引用
-
----
-
-## 四、工具函数（shared/src/utils/）【PRD-2.4】
-
-### 4.1 格式化工具（`utils/format.ts`）
+### 3.1 格式化工具（`utils/format.ts`）
 
 - [ ] `formatDuration(seconds: number): string` — 秒 → `"3:45"` 或 `"1:23:45"`
 - [ ] `formatDate(date: string | Date): string` — 日期格式化（如 `"2026-04-02"`）
@@ -204,17 +112,17 @@
 - [ ] `formatNumber(n: number): string` — 大数字格式化（`"1.2万播放"`）
 - [ ] `formatFileSize(bytes: number): string` — 文件大小（`"123MB"`）
 
-### 4.2 情感工具（`utils/sentiment.ts`）
+### 3.2 情感工具（`utils/sentiment.ts`）
 
 - [ ] `getSentimentConfig(score: number)`：根据 0.0~1.0 返回 `{ color, label, icon, bgClass }`
 - [ ] `getSentimentLabel(score: number): SentimentLabel`：根据评分返回枚举值
 
-### 4.3 结果处理（`utils/result.ts`）
+### 3.3 结果处理（`utils/result.ts`）
 
-- [ ] `handleApiError(error: any): string`：从 error 对象提取错误消息
-- [ ] `isAuthError(error: any): boolean`：判断是否为 401 未登录错误
+- [ ] `handleApiError(error: unknown): string`：从 error 对象提取错误消息
+- [ ] `isAuthError(error: unknown): boolean`：判断是否为 401 未登录错误
 
-### 4.4 Session 存储（`utils/storage.ts`）
+### 3.4 Session 存储（`utils/storage.ts`）
 
 - [ ] `getSessionId(): string | null`：从 sessionStorage 读取 `SESSION_ID`
 - [ ] `setSessionId(id: string): void`：写入 sessionStorage
@@ -222,9 +130,9 @@
 
 ---
 
-## 五、状态管理（shared/src/store/）【PRD-2.7】
+## 四、状态管理（shared/src/store/）【PRD-2.7】
 
-### 5.1 userStore
+### 4.1 userStore（`store/userStore.ts`）
 
 - [ ] Zustand Store：`userInfo`、`isLoggedIn`、`isAdmin`
 - [ ] `login(userInfo: UserInfo)`：写入 userInfo，设置 isAdmin = userInfo.role === 'ADMIN'，同时 `setSessionId()`
@@ -233,74 +141,74 @@
 - [ ] `persist` 中间件：`sessionStorage` 持久化
 - [ ] TypeScript 类型完整注解
 
-### 5.2 playerStore
+### 4.2 playerStore（`store/playerStore.ts`）
 
 - [ ] Zustand Store：`currentVideo`、`setCurrentVideo()`、`watchDuration`、`setWatchDuration()`
 
 ---
 
-## 六、自定义 Hooks（shared/src/hooks/）【PRD-2.3】
+## 五、自定义 Hooks（shared/src/hooks/）【PRD-2.3】
 
-### 6.1 useInfiniteScroll
+### 5.1 useInfiniteScroll（`hooks/useInfiniteScroll.ts`）
 
 - [ ] 接收 `fetchFn`、`pageSize`
 - [ ] 返回 `{ data, loading, hasMore, loadMore, refresh }`
 - [ ] IntersectionObserver 监听底部，自动加载下一页
 
-### 6.2 useDebounce
+### 5.2 useDebounce（`hooks/useDebounce.ts`）
 
 - [ ] `useDebounce<T>(value: T, delay: number): T`：防抖 Hook
 
-### 6.3 useAi
+### 5.3 useAi（`hooks/useAi.ts`）
 
 - [ ] `getSearchSuggestions(keyword: string): Promise<string[]>`：调用 AI API 获取推荐热词，带 loading 状态
 - [ ] 错误处理：API 失败时返回空数组，不阻塞页面
 
 ---
 
-## 七、共享组件（shared/src/components/）【PRD-2.2 / 4 / 6】
+## 六、共享组件（shared/src/components/）【PRD-2.2 / 4 / 6】
 
-### 7.1 原子组件（base/）
+### 6.1 原子组件（`components/base/`）
 
-#### UserAvatar
+#### UserAvatar（`components/base/UserAvatar.tsx`）
 
 - [ ] Props：`src?: string`, `size?: 'sm' | 'md' | 'lg'`, `userId?: number`
 - [ ] 圆形头像，`src` 为空时显示首字母占位符
 - [ ] 使用 DaisyUI `avatar` 组件
 
-#### StatusBadge
+#### StatusBadge（`components/base/StatusBadge.tsx`）
 
 - [ ] Props：`status: 0 | 1 | 2`
 - [ ] 0 → `badge-warning` "待审核"；1 → `badge-success` "已通过"；2 → `badge-error` "已驳回"
 
-#### AiTagBadge
+#### AiTagBadge（`components/base/AiTagBadge.tsx`）
 
 - [ ] Props：`tag: string`, `onClick?: (tag: string) => void`
 - [ ] DaisyUI `badge badge-primary`，点击触发 `onClick`（跳转标签搜索）
 
-### 7.2 业务组件（business/）
+### 6.2 业务组件（`components/business/`）
 
-#### SentimentBar
+#### SentimentBar（`components/business/SentimentBar.tsx`）
 
 - [ ] Props：`score: number`（0.0~1.0），`label?: SentimentLabel`
 - [ ] DaisyUI `progress` 组件，根据评分区间显示不同颜色进度条
 - [ ] 图标 + 悬浮提示（具体分数 + 标签）
 - [ ] 调用 `utils/sentiment.ts` 获取颜色配置
 
-#### CoinInput
+#### CoinInput（`components/business/CoinInput.tsx`）
 
 - [ ] Props：`videoId: number`, `userCoins: number`, `onSuccess?: () => void`
 - [ ] 显示硬币余额，点击"投币"按钮
 - [ ] 余额不足时按钮禁用 + 提示
 
-#### ConfirmDialog
+#### ConfirmDialog（`components/business/ConfirmDialog.tsx`）
 
 - [ ] Props：`open: boolean`, `title: string`, `message: string`, `onConfirm`, `onCancel`
 - [ ] DaisyUI `modal` 组件
 
-### 7.3 领域组件（domain/）
+### 6.3 领域组件（`components/domain/`）
 
-#### VideoCard
+#### VideoCard（`components/domain/VideoCard.tsx`）
 
 - [ ] Props：`video: Video`, `onClick?: () => void`
 - [ ] 封面图（`loading="lazy"`）、时长徽章、右下角 `formatDuration(video.duration)`
@@ -310,21 +218,21 @@
 - [ ] 点击卡片 → 调用 `onClick`
 - [ ] hover 时封面微微放大（`hover:scale-105`）
 
-#### CommentItem
+#### CommentItem（`components/domain/CommentItem.tsx`）
 
 - [ ] Props：`comment: Comment`, `onReply?`, `onDelete?`, `canDelete?: boolean`
 - [ ] 头像 + 用户名 + 相对时间 + 情感进度条（`SentimentBar`）+ 内容
 - [ ] 显示"回复"按钮（触发 `onReply`）
 - [ ] `canDelete=true` 时渲染"删除"按钮
 
-#### CommentTree
+#### CommentTree（`components/domain/CommentTree.tsx`）
 
 - [ ] Props：`comments: Comment[]`, `videoAuthorId: number`, `onReply?`, `onDelete?`
 - [ ] 顶级评论按 `sentimentScore DESC` 排序
 - [ ] 二级评论（`parentId !== null`）作为子项渲染在父评论下方（楼中楼）
 - [ ] `CommentItem` 渲染每条评论
 
-#### HeaderNav
+#### HeaderNav（`components/domain/HeaderNav.tsx`）
 
 - [ ] Props：`keyword?: string`, `onSearch?: (kw: string) => void`
 - [ ] DaisyUI `navbar` 组件
@@ -333,10 +241,20 @@
 - [ ] 已登录：显示用户名 + 下拉菜单（个人中心/投稿/退出）
 - [ ] 未登录：显示 [登录] + [注册] 按钮
 
-### 7.4 统一导出
+### 6.4 统一导出
 
-- [ ] 创建 `shared/src/components/index.js`，导出所有组件
+- [ ] 创建 `shared/src/components/index.ts`，导出所有组件
 - [ ] user 和 admin 通过 `import { VideoCard, HeaderNav } from '@libiland/shared/components'` 使用
+
+---
+
+## 七、shared 统一导出（shared/src/index.ts）
+
+- [ ] 导出所有 types
+- [ ] 导出所有 utils
+- [ ] 导出所有 store
+- [ ] 导出所有 hooks
+- [ ] 导出所有 components
 
 ---
 
@@ -344,13 +262,13 @@
 
 ### 8.1 路由配置（user/src/App.tsx）
 
-- [ ] 安装 React Router v6：`pnpm add react-router-dom`（user 和 admin 各自安装）
+- [x] React Router v6 已安装
 - [ ] 公开路由：`/`、`/video/detail/:id`、`/video/search`、`/user/login`、`/user/register`
 - [ ] 需登录路由：`/video/publish`、`/user/profile`、`/history`、`/collect`、`/video/my`
 - [ ] 实现 `ProtectedRoute` 组件：未登录 → 跳转 `/user/login?redirect=xxx`
 - [ ] 使用 `React.lazy` + `Suspense` 实现路由懒加载
 
-### 8.2 HomePage
+### 8.2 HomePage（`pages/HomePage.tsx`）
 
 - [ ] 路由：`/` 或 `/video/list`
 - [ ] `useInfiniteScroll` 加载视频列表
@@ -359,7 +277,7 @@
 - [ ] `VideoCard` 渲染每条视频
 - [ ] 空状态：显示"暂无视频"
 
-### 8.3 VideoDetailPage
+### 8.3 VideoDetailPage（`pages/VideoDetailPage.tsx`）
 
 - [ ] 路由：`/video/detail/:id`，从 URL 取 `id` 参数
 - [ ] 页面加载时：`api.getVideoDetail(id)` + `api.recordHistory(id)`
@@ -371,7 +289,7 @@
 - [ ] `CommentTree` 渲染评论列表
 - [ ] `video.authorId === userInfo.id` 时：每条评论旁显示"删除"按钮
 
-### 8.4 SearchPage
+### 8.4 SearchPage（`pages/SearchPage.tsx`）
 
 - [ ] 路由：`/video/search`，从 URL 取 `keyword` 参数
 - [ ] 显示搜索结果数量
@@ -382,21 +300,21 @@
   - [ ] 显示 AI 推荐热词，点击跳转到 `/video/search?keyword=xxx`
   - [ ] 提供"🤖 AI智能推荐"按钮（用户主动触发）
 
-### 8.5 LoginPage
+### 8.5 LoginPage（`pages/LoginPage.tsx`）
 
 - [ ] 路由：`/user/login`
 - [ ] DaisyUI `card` + `form` 布局
 - [ ] 表单：用户名 + 密码 + 登录按钮
 - [ ] 提交 → `api.userLogin()` → 写入 `userStore.login()` → 跳转首页或来源页
 
-### 8.6 RegisterPage
+### 8.6 RegisterPage（`pages/RegisterPage.tsx`）
 
 - [ ] 路由：`/user/register`
 - [ ] 表单：用户名 + 密码 + 确认密码
 - [ ] 前端校验：用户名3-12字符、密码6-20位、两次密码一致
 - [ ] 提交 → `api.userRegister()` → 提示注册成功 → 跳转登录页
 
-### 8.7 ProfilePage
+### 8.7 ProfilePage（`pages/ProfilePage.tsx`）
 
 - [ ] 路由：`/user/profile`（需登录）
 - [ ] 头像上传：`input type="file"` + `api.updateProfile(avatar)`
@@ -406,7 +324,7 @@
 - [ ] 硬币余额展示：`userInfo.coins`
 - [ ] 注销账号：`ConfirmDialog`，输入密码，`api.deleteAccount()` → logout → 跳转首页
 
-### 8.8 PublishPage
+### 8.8 PublishPage（`pages/PublishPage.tsx`）
 
 - [ ] 路由：`/video/publish`（需登录）
 - [ ] 封面图上传：`input type="file" accept="image/*"` + 本地预览
@@ -415,21 +333,21 @@
 - [ ] 提交：FormData 封装，`api.publishVideo(formData)`
 - [ ] 成功后提示"视频已提交，进入审核队列"，跳转首页
 
-### 8.9 MyVideosPage
+### 8.9 MyVideosPage（`pages/MyVideosPage.tsx`）
 
 - [ ] 路由：`/video/my`（需登录）
 - [ ] 列表：调用 `api.getMyVideos()`
 - [ ] 每条视频：封面 + 标题 + `StatusBadge`（审核状态）+ 发布时间 + 播放量
 - [ ] 删除按钮：`ConfirmDialog` 确认后 `api.deleteVideo(id)`
 
-### 8.10 HistoryPage
+### 8.10 HistoryPage（`pages/HistoryPage.tsx`）
 
 - [ ] 路由：`/history`（需登录）
 - [ ] 列表：调用 `api.getHistory()`
 - [ ] 每条：封面 + 标题 + UP主 + 观看时间
 - [ ] 删除单条历史：`api.deleteHistory(id)`
 
-### 8.11 CollectPage
+### 8.11 CollectPage（`pages/CollectPage.tsx`）
 
 - [ ] 路由：`/collect`（需登录）
 - [ ] 列表：调用 `api.getCollectList()`
@@ -441,26 +359,26 @@
 
 ### 9.1 路由配置（admin/src/App.tsx）
 
-- [ ] 安装 React Router v6（admin 项目内）
+- [x] React Router v6 已安装
 - [ ] `/admin/login` 公开路由
 - [ ] `/admin/*` 其他路由需 ADMIN 角色
 - [ ] 实现 `AdminRoute` 守卫组件：非管理员 → 跳转 `/admin/login`
 - [ ] 管理端布局：侧边栏 + 主内容区（使用 DaisyUI `drawer` 或 `navbar`）
 
-### 9.2 AdminLoginPage
+### 9.2 AdminLoginPage（`pages/AdminLoginPage.tsx`）
 
 - [ ] 路由：`/admin/login`
 - [ ] 独立页面样式（DaisyUI `card`）
 - [ ] 表单：用户名 + 密码
 - [ ] 提交 → `api.adminLogin()` → 写入 `userStore.login()` → 跳转 `/admin/dashboard`
 
-### 9.3 AdminDashboard
+### 9.3 AdminDashboard（`pages/AdminDashboard.tsx`）
 
 - [ ] 路由：`/admin/dashboard`
 - [ ] DaisyUI `stats` 组件展示：用户总数 / 视频总数 / 待审核视频 / 待处理举报
 - [ ] 快捷入口卡片：审核视频 / 用户管理 / 举报处理
 
-### 9.4 AuditListPage
+### 9.4 AuditListPage（`pages/AuditListPage.tsx`）
 
 - [ ] 路由：`/admin/audit`
 - [ ] 列表：调用 `api.getPendingVideos()`
@@ -469,7 +387,7 @@
 - [ ] 通过按钮：调用 `api.approveVideo(id)`
 - [ ] 驳回按钮：`ConfirmDialog` 输入驳回原因，`api.rejectVideo(id, reason)`
 
-### 9.5 UserManagePage
+### 9.5 UserManagePage（`pages/UserManagePage.tsx`）
 
 - [ ] 路由：`/admin/user`
 - [ ] DaisyUI `table` 展示用户列表
@@ -478,7 +396,7 @@
 - [ ] 操作列：封禁按钮 / 解封按钮（`badge badge-error` / `badge badge-success`）
 - [ ] 导出按钮：调用 `api.exportUsers()`（或 `window.open` 下载链接），触发文件下载
 
-### 9.6 ReportHandlePage
+### 9.6 ReportHandlePage（`pages/ReportHandlePage.tsx`）
 
 - [ ] 路由：`/admin/report`
 - [ ] 列表：调用 `api.getReportList()`
@@ -488,19 +406,44 @@
 
 ---
 
-## 十、AI 能力接入 【PRD-5】
+## 十、API 接口层（后端完成后再创建）
 
-### 10.1 useAi Hook
+> **注意**：API 接口层依赖后端接口定义，后端完成后统一创建。
 
-- [ ] `getSearchSuggestions(keyword: string): Promise<string[]>`：POST DeepSeek API，`messages` 传入 Prompt，返回5个热词
-- [ ] loading 状态
-- [ ] 错误处理：API 失败时返回空数组
+### 10.1 client（`api/client.ts`）
 
-### 10.2 搜索建议UI（SearchPage）
+- [ ] Axios 实例，`baseURL` 读取 `VITE_API_BASE_URL`，`timeout: 10000`
+- [ ] 请求拦截器：自动从 `sessionStorage` 读取 `SESSION_ID`，附加到 `X-Session-Id` header
+- [ ] 响应拦截器：统一解包 `ApiResult<T>`，`code !== 200` 时 reject
+- [ ] `code === 401`：清除 `SESSION_ID`，跳转 `/user/login`
 
-- [ ] 无结果时显示 "🤖 您是否在找：" + 热词列表
-- [ ] 每个热词可点击，点击后 `navigate('/video/search?keyword=' + s)`
-- [ ] 提供"🤖 AI智能推荐"按钮，用户点击后调用 AI
+### 10.2 user 接口（`api/user.ts`）
+
+- [ ] `userRegister`, `userLogin`, `userLogout`, `getProfile`, `updateProfile`, `changePassword`, `deleteAccount`
+
+### 10.3 video 接口（`api/video.ts`）
+
+- [ ] `getVideoList`, `getVideoDetail`, `searchVideos`, `publishVideo`, `getMyVideos`, `deleteVideo`
+
+### 10.4 action 接口（`api/action.ts`）
+
+- [ ] `toggleLike`, `toggleCollect`, `throwCoin`, `getActionStatus`
+
+### 10.5 comment 接口（`api/comment.ts`）
+
+- [ ] `getCommentList`, `publishComment`, `deleteComment`, `likeComment`
+
+### 10.6 history/collect/signin 接口
+
+- [ ] `getHistory`, `recordHistory`, `getCollectList`, `getSigninStatus`, `doSignin`
+
+### 10.7 admin 接口（`api/admin.ts`）
+
+- [ ] `adminLogin`, `getPendingVideos`, `approveVideo`, `rejectVideo`, `getUserList`, `banUser`, `unbanUser`, `getReportList`, `ignoreReport`, `takedownReport`
+
+### 10.8 AI 接口（`api/ai.ts`）
+
+- [ ] `getSearchSuggestions`：前端直调 DeepSeek API
 
 ---
 
@@ -542,10 +485,9 @@
 - [ ] DaisyUI `card`/`btn`/`badge`/`modal` 等组件优先使用
 - [ ] 响应式：`grid-cols-1 md:grid-cols-2 xl:grid-cols-4`
 
-### 12.3 ESLint + Prettier
+### 12.3 ESLint
 
-- [ ] 在 user 和 admin 各自配置 ESLint（React Hooks 规则）
-- [ ] 在 user 和 admin 各自配置 Prettier（单引号、分号、打印宽度）
+- [ ] user 和 admin 各自配置 ESLint（React Hooks 规则）
 - [ ] 提交前格式化所有代码
 
 ---
@@ -566,27 +508,4 @@
 
 ---
 
-## 十四、Tailwind + DaisyUI 配置
-
-### 14.1 user 配置
-
-- [ ] 安装 Tailwind + DaisyUI：`pnpm add -D tailwindcss postcss autoprefixer && pnpm add daisyui`（user）
-- [ ] 初始化：`npx tailwindcss init -p`（在 user 目录）
-- [ ] 配置 `tailwind.config.ts`：
-  ```ts
-  import daisyui from 'daisyui';
-  export default {
-    plugins: [daisyui],
-    content: ['./index.html', './src/**/*.{ts,tsx}'],
-  };
-  ```
-- [ ] 配置 `tsconfig.json`：路径别名 `@/` 指向 `src/`
-
-### 14.2 admin 配置
-
-- [ ] 安装 Tailwind + DaisyUI：`pnpm add -D tailwindcss postcss autoprefixer && pnpm add daisyui`（admin）
-- [ ] 初始化和配置同上
-
----
-
-*任务清单 V2.0 | 基于前端 PRD V2.0 | 技术栈：React 18 + TS/TSX + Tailwind + DaisyUI + Zustand + pnpm workspace*
+*任务清单 V2.1 | 基于前端 PRD V2.0 | 技术栈：React 19 + TypeScript + Tailwind + DaisyUI + Zustand + pnpm workspace*
