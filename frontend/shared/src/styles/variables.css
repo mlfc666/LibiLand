@@ -1,0 +1,8 @@
+:root {
+  --color-primary: #00a1d6;
+  --color-secondary: #f45b69;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
