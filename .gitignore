@@ -49,6 +49,9 @@ Thumbs.db
 # reference
 frontend/reference
 
+# Claude
+.claude/
+
 # =================== Backend ===================
 # Gradle
 .gradle

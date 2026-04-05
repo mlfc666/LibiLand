@@ -1,14 +1,14 @@
 # 《哩哔哩哔》产品需求文档（PRD）
 
-| 属性 | 内容 |
-|---|---|
-| **文档版本** | V7.0 |
-| **文档状态** | 正式版 |
-| **产品名称** | 哩哔哩哔（LiBiliBi） |
-| **产品类型** | 视频内容分发平台 |
-| **开发周期** | 2026-04-01 ~ 2026-04-13 |
+| 属性       | 内容                                                  |
+|----------|-----------------------------------------------------|
+| **文档版本** | V7.0                                                |
+| **文档状态** | 正式版                                                 |
+| **产品名称** | 哩哔哩哔（LiBiliBi）                                      |
+| **产品类型** | 视频内容分发平台                                            |
+| **开发周期** | 2026-04-01 ~ 2026-04-13                             |
 | **技术约束** | 禁止使用任何框架（Spring/MyBatis/JdbcTemplate等），全部底层组件必须手写实现 |
-| **设计理念** | 高并发、高性能、工业级、可扩展、全自研框架驱动、AI深度融合 |
+| **设计理念** | 高并发、高性能、工业级、可扩展、全自研框架驱动、AI深度融合                      |
 
 ---
 
@@ -22,43 +22,43 @@
 
 ### 1.2 核心设计理念
 
-| 理念 | 含义 |
-|---|---|
-| **高并发** | 全面基于 Java 21 Virtual Threads（虚拟线程）处理 I/O 密集型任务；手写连接池、内存缓存层、异步非阻塞架构 |
-| **高性能** | 三级缓存（进程内 LRU + 热点数据预加载 + MySQL 索引优化）；推荐计算异步化，不阻塞主请求链路 |
-| **全手写框架** | ORM、MVC、IOC、Cache、AI引擎、推荐引擎、安全模块全部手写实现，展示对底层原理的深度掌握 |
-| **AI 原生融合** | AI 不只是辅助工具，而是深度嵌入内容分发逻辑：AI 情感评分直接影响热度分和评论展示权重 |
-| **生产级规范** | 统一的异常处理、标准错误码、全链路日志审计、幂等性设计、事务一致性保障 |
+| 理念          | 含义                                                                 |
+|-------------|--------------------------------------------------------------------|
+| **高并发**     | 全面基于 Java 21 Virtual Threads（虚拟线程）处理 I/O 密集型任务；手写连接池、内存缓存层、异步非阻塞架构 |
+| **高性能**     | 三级缓存（进程内 LRU + 热点数据预加载 + MySQL 索引优化）；推荐计算异步化，不阻塞主请求链路              |
+| **全手写框架**   | ORM、MVC、IOC、Cache、AI引擎、推荐引擎、安全模块全部手写实现，展示对底层原理的深度掌握                |
+| **AI 原生融合** | AI 不只是辅助工具，而是深度嵌入内容分发逻辑：AI 情感评分直接影响热度分和评论展示权重                      |
+| **生产级规范**   | 统一的异常处理、标准错误码、全链路日志审计、幂等性设计、事务一致性保障                                |
 
 ### 1.3 核心功能矩阵
 
-| 功能维度 | 具体功能 |
-|---|---|
-| **内容分发** | 视频浏览/推荐算法/搜索/刷新/播放/下载 |
-| **用户体系** | 注册/登录/注销/个人信息管理/签到/硬币 |
-| **社交互动** | 点赞/取消点赞/收藏/取消收藏/投币/评论（多级）/评论点赞/举报 |
-| **UP主权限** | 发布视频/管理自己视频下的评论/查看统计数据 |
-| **管理后台** | 视频审核/用户封禁/举报处理/数据导出 |
-| **自研框架** | Hesper-ORM、Hesper-MVC、Hesper-IOC、Hesper-Cache、Hesper-AI、Hesper-Recommend、Hesper-Security、Hesper-Log |
-| **AI 引擎** | 视频自动标注（标签+摘要）/评论情感分析（影响热度/展示）/AI 搜索建议 |
+| 功能维度      | 具体功能                                                                                                |
+|-----------|-----------------------------------------------------------------------------------------------------|
+| **内容分发**  | 视频浏览/推荐算法/搜索/刷新/播放/下载                                                                               |
+| **用户体系**  | 注册/登录/注销/个人信息管理/签到/硬币                                                                               |
+| **社交互动**  | 点赞/取消点赞/收藏/取消收藏/投币/评论（多级）/评论点赞/举报                                                                   |
+| **UP主权限** | 发布视频/管理自己视频下的评论/查看统计数据                                                                              |
+| **管理后台**  | 视频审核/用户封禁/举报处理/数据导出                                                                                 |
+| **自研框架**  | Hesper-ORM、Hesper-MVC、Hesper-IOC、Hesper-Cache、Hesper-AI、Hesper-Recommend、Hesper-Security、Hesper-Log |
+| **AI 引擎** | 视频自动标注（标签+摘要）/评论情感分析（影响热度/展示）/AI 搜索建议                                                               |
 
 ### 1.4 用户角色定义
 
-| 角色 | 定义 | 权限边界 |
-|---|---|---|
-| **游客（Guest）** | 未登录的匿名访问者 | 视频浏览、搜索、播放；**禁止**：下载、投稿、互动 |
+| 角色               | 定义          | 权限边界                              |
+|------------------|-------------|-----------------------------------|
+| **游客（Guest）**    | 未登录的匿名访问者   | 视频浏览、搜索、播放；**禁止**：下载、投稿、互动        |
 | **正式用户（Client）** | 已注册并登录的正式成员 | 视频投稿、互动（点赞/投币/收藏/评论）、下载、签到、管理个人内容 |
-| **管理员（Admin）** | 平台运维与管理人员 | 视频审核、用户封禁/解封、举报处理、运营数据导出 |
+| **管理员（Admin）**   | 平台运维与管理人员   | 视频审核、用户封禁/解封、举报处理、运营数据导出          |
 
 ### 1.5 专业术语表
 
-| 术语 | 定义 |
-|---|---|
-| **UP主** | 视频创作者，即发布视频的正式用户 |
-| **硬币** | 平台虚拟货币，通过每日签到获取，用于对视频投币，投币数计入视频热度 |
-| **三连** | 点赞 + 收藏 + 投币，代表用户对视频的最高认可 |
-| **热度分（Score）** | 视频综合热度评分，由互动数据加权和 AI 情感分析共同决定，直接决定首页推荐排序 |
-| **审核状态** | 视频审核流程中的各状态：待审核/通过/驳回 |
+| 术语                  | 定义                                          |
+|---------------------|---------------------------------------------|
+| **UP主**             | 视频创作者，即发布视频的正式用户                            |
+| **硬币**              | 平台虚拟货币，通过每日签到获取，用于对视频投币，投币数计入视频热度           |
+| **三连**              | 点赞 + 收藏 + 投币，代表用户对视频的最高认可                   |
+| **热度分（Score）**      | 视频综合热度评分，由互动数据加权和 AI 情感分析共同决定，直接决定首页推荐排序    |
+| **审核状态**            | 视频审核流程中的各状态：待审核/通过/驳回                       |
 | **Sentiment Score** | AI 对评论/内容的情感分析评分（0.0~1.0），低于阈值自动隐藏，高于阈值加权展示 |
 
 ---
@@ -82,16 +82,16 @@
 
 本项目共包含 **8 个手写核心框架**，每个框架均有明确的职责边界和 API 规范：
 
-| 框架名称 | 职责 | 核心特性 |
-|---|---|---|
-| **Hesper-IOC** | 依赖注入容器 | 组件扫描、构造器注入/字段注入、单例管理、循环依赖检测 |
-| **Hesper-MVC** | Web 请求调度 | 中央调度器、注解路由、参数自动绑定、JSON 序列化、拦截器链 |
-| **Hesper-ORM** | 持久层引擎 | 动态代理 DAO、注解 SQL、参数绑定、结果集映射、事务管理、连接池 |
-| **Hesper-Cache** | 进程内缓存层 | LRU 淘汰策略、TTL 过期、热点数据预加载、多级缓存命中统计 |
-| **Hesper-AI** | AI 任务异步引擎 | 虚拟线程执行、API 调用封装、重试机制、结果回调、内容分析（标签/情感） |
-| **Hesper-Recommend** | 推荐算法引擎 | 热度公式计算、标签相似度、冷启动策略、异步评分更新 |
-| **Hesper-Security** | 安全与权限模块 | RBAC 权限模型、Banned 用户实时拦截、垂直越权防御、加密工具 |
-| **Hesper-Log** | 结构化日志系统 | 标准日志格式、日志分级（DEBUG/INFO/WARN/ERROR）、异步写盘、滚动策略 |
+| 框架名称                 | 职责        | 核心特性                                         |
+|----------------------|-----------|----------------------------------------------|
+| **Hesper-IOC**       | 依赖注入容器    | 组件扫描、构造器注入/字段注入、单例管理、循环依赖检测                  |
+| **Hesper-MVC**       | Web 请求调度  | 中央调度器、注解路由、参数自动绑定、JSON 序列化、拦截器链              |
+| **Hesper-ORM**       | 持久层引擎     | 动态代理 DAO、注解 SQL、参数绑定、结果集映射、事务管理、连接池          |
+| **Hesper-Cache**     | 进程内缓存层    | LRU 淘汰策略、TTL 过期、热点数据预加载、多级缓存命中统计             |
+| **Hesper-AI**        | AI 任务异步引擎 | 虚拟线程执行、API 调用封装、重试机制、结果回调、内容分析（标签/情感）        |
+| **Hesper-Recommend** | 推荐算法引擎    | 热度公式计算、标签相似度、冷启动策略、异步评分更新                    |
+| **Hesper-Security**  | 安全与权限模块   | RBAC 权限模型、Banned 用户实时拦截、垂直越权防御、加密工具          |
+| **Hesper-Log**       | 结构化日志系统   | 标准日志格式、日志分级（DEBUG/INFO/WARN/ERROR）、异步写盘、滚动策略 |
 
 ### 2.3 架构规范
 
@@ -134,26 +134,29 @@ Hesper-Log (结构化日志输出)
 
 ### 2.4 包结构规范
 
-| 包名 | 职责 | 示例 |
-|---|---|---|
-| `com.project.www.po` | 实体类（Plain Old Java Objects） | `User.java`, `Video.java`, `Comment.java` |
-| `com.project.www.dao` | 数据访问接口（Mapper接口） | `UserDao.java`, `VideoDao.java` |
-| `com.project.www.service` | 业务逻辑接口 | `UserService.java`, `VideoService.java` |
-| `com.project.www.service.impl` | 业务逻辑实现 | `UserServiceImpl.java`, `VideoServiceImpl.java` |
-| `com.project.www.servlet` | 视图控制器 | `UserServlet.java`, `VideoServlet.java` |
-| `com.project.www.controller` | REST 控制器（可选，前端分离） | `VideoController.java` |
-| `com.project.www.engine` | 自研引擎 | `AIRecommendEngine.java`, `SentimentEngine.java` |
-| `com.project.www.core` | 手写框架核心 | ORM代理、IOC容器、DispatcherServlet |
-| `com.project.www.core.orm` | Hesper-ORM 核心 | `SqlSession.java`, `MapperProxy.java`, `ResultSetHandler.java` |
-| `com.project.www.core.mvc` | Hesper-MVC 核心 | `DispatcherServlet.java`, `HandlerMapping.java`, `ParamBinder.java` |
-| `com.project.www.core.ioc` | Hesper-IOC 核心 | `ApplicationContext.java`, `BeanContainer.java` |
-| `com.project.www.core.cache` | Hesper-Cache 核心 | `CacheManager.java`, `LRUCache.java` |
-| `com.project.www.core.ai` | Hesper-AI 核心 | `AIExecutor.java`, `SentimentAnalyzer.java` |
-| `com.project.www.config` | 配置相关类 | 数据库配置、框架配置 |
-| `com.project.www.util` | 工具类 | `JDBCUtils.java`, `JsonHelper.java`, `MD5Util.java`, `SnowflakeIdUtil.java` |
-| `com.project.www.constant` | 常量类 | `Status.java`, `Role.java`, `ActionType.java` |
-| `com.project.www.filter` | 过滤器 | `CharacterEncodingFilter.java`, `AuthFilter.java`, `BannedFilter.java` |
-| `com.project.www.exception` | 统一异常 | `GlobalExceptionHandler.java`, `BusinessException.java` |
+| 包名 | 职责 |
+|---|---|
+| `moe.mlfc.libiland.models` | 实体类（User, Video, Comment...） |
+| `moe.mlfc.libiland.repository` | 数据访问接口（Mapper接口） |
+| `moe.mlfc.libiland.service` | 业务逻辑接口 |
+| `moe.mlfc.libiland.service.impl` | 业务逻辑实现 |
+| `moe.mlfc.libiland.controller` | REST 控制器 |
+| `moe.mlfc.libiland.config` | 配置类 |
+| `moe.mlfc.libiland.common.constant` | 常量枚举（UserRole, VideoStatus...） |
+| `moe.mlfc.libiland.common.model` | 通用模型（Result, PageQuery...） |
+| `moe.mlfc.libiland.common.exception` | 统一异常 |
+| `moe.mlfc.libiland.common.util` | 工具类 |
+| `moe.mlfc.libiland.infrastructure.orm` | 手写 ORM 框架 |
+| `moe.mlfc.libiland.infrastructure.orm.annotation` | ORM 注解（@Select, @Insert...） |
+| `moe.mlfc.libiland.infrastructure.mvc` | 手写 MVC 框架 |
+| `moe.mlfc.libiland.infrastructure.ioc` | 手写 IOC 容器 |
+| `moe.mlfc.libiland.infrastructure.cache` | 手写 Cache 框架 |
+| `moe.mlfc.libiland.infrastructure.ai` | 手写 AI 引擎框架 |
+| `moe.mlfc.libiland.infrastructure.security` | 手写 Security 框架 |
+| `moe.mlfc.libiland.infrastructure.recommend` | 手写推荐引擎框架 |
+| `moe.mlfc.libiland.infrastructure.log` | 手写日志框架 |
+| `moe.mlfc.libiland.annotation` | 自定义注解（@Component, @Autowired...） |
+| `moe.mlfc.libiland.filter` | 过滤器链 |
 
 ### 2.5 代码规范
 
@@ -190,7 +193,7 @@ Hesper-Log (结构化日志输出)
 
 | 特性 | 实现要求 |
 |---|---|
-| **组件扫描** | 启动时扫描 `com.project.www` 包及其子包，识别 `@Component`、`@Service`、`@Repository`、`@Controller` 注解的类 |
+| **组件扫描** | 启动时扫描 `moe.mlfc.libiland` 包及其子包，识别 `@Component`、`@Service`、`@Repository`、`@Controller` 注解的类 |
 | **依赖注入** | 支持**构造器注入**（优先）和**字段注入**（ `@Autowired`），通过反射赋值 |
 | **单例管理** | 所有 Bean 默认为单例模式，存储在 `ConcurrentHashMap<String, Object>` 中 |
 | **生命周期钩子** | 支持 `init()` 方法（初始化后调用）和 `destroy()` 方法（容器关闭时调用） |

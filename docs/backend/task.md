@@ -12,7 +12,7 @@
 
 - [ ] 确定技术栈：JDK 21、MySQL 8.0+、Tomcat 10.1+、IntelliJ IDEA
 - [ ] 创建 Maven 项目（`pom.xml`），配置依赖：Jakarta Servlet API、MySQL Connector、`com.beust:klaxon`（或手写 JSON）
-- [ ] 创建包结构：`po/dao/service/service.impl/servlet/controller/engine/core/config/util/constant/filter/exception`
+- [ ] 创建包结构：`models/dao/service/service.impl/controller/config/common/constant/common/model/common/exception/common/util/infrastructure/orm/infrastructure/mvc/infrastructure/ioc/infrastructure/cache/infrastructure/ai/infrastructure/security/infrastructure/recommend/infrastructure/log/annotation/filter`
 - [ ] 编写 `resources/config.properties`：数据库连接（url/username/password）、文件上传路径、`app.host`、`app.port`
 - [ ] 编写 `resources/log4j.properties`（或手写日志框架配置）
 - [ ] Git 初始化：`git init`，创建 Gitee 公开仓库，配置 `.gitignore`（忽略 `target/`、`*.class`、`uploads/`）
@@ -42,7 +42,7 @@
 - [ ] 编写 `@Autowired` 注解：`@Target({ElementType.TYPE, ElementType.METHOD})`，`required()` 默认 true
 - [ ] 实现 `BeanDefinition`：保存 Bean 名称、类型、是否单例、依赖关系
 - [ ] 实现 `ApplicationContext`：
-  - [ ] `start()`：包扫描 `com.project.www` 及子包，识别 @Component/@Service/@Repository/@Controller
+  - [ ] `start()`：包扫描 `moe.mlfc.libiland` 及子包，识别 @Component/@Service/@Repository/@Controller
   - [ ] 注册所有 `BeanDefinition` 到 `ConcurrentHashMap<String, BeanDefinition>`
   - [ ] 构造器注入：递归解析构造器参数依赖，按拓扑序实例化
   - [ ] 字段注入：反射赋值 `@Autowired` 字段
